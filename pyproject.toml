@@ -30,6 +30,10 @@ mysql-connector-python = "^9.0.0"
 selenium = "^4.22.0"
 bs4 = "^0.0.2"
 
+
+[tool.poetry.group.secret.dependencies]
+python-dotenv = "^1.0.1"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

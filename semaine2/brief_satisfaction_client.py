@@ -39,11 +39,11 @@ def populate_retour(conn: sqlite3.Connection, rows: list, table_name: str = 'Ret
 
 
 if __name__ == "__main__":
-    connector = sqlite3.connect('brief_satisfacion_client/data/bsc.sqlite')
-    schema_path = Path('brief_satisfacion_client/brief_satisfaction_client.sql')
-    product_path = Path('../data/data_sem2/produit.csv')
-    magazin_path = Path('../data/data_sem2/magasin.csv')
-    retour_client = Path('../data/data_sem2/retour_clients.csv')
+    connector = sqlite3.connect('../data/bsc.sqlite')
+    schema_path = Path('brief_satisfaction_client.sql')
+    product_path = Path('../../data/data_sem2/produit.csv')
+    magazin_path = Path('../../data/data_sem2/magasin.csv')
+    retour_client = Path('../../data/data_sem2/retour_clients.csv')
 
     with open(schema_path, "r") as file:
         schema_sql = file.read()
