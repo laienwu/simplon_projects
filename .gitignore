@@ -240,3 +240,4 @@ cython_debug/
 .idea/
 semaine3/test.py
 data/
+/semaine5/script/dbdata6/
