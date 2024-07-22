@@ -1,0 +1,45 @@
+
+services:
+
+  mongo:
+
+    image: mongo
+
+    container_name: mongo
+
+#    environment:
+#
+#        - MONGO_INITDB_ROOT_USERNAME="user"
+#
+#        - MONGO_INITDB_ROOT_PASSWORD="pass"
+
+    restart: unless-stopped
+
+    ports:
+
+      - "27017:27017"
+
+    volumes:
+
+      - ./database/db:/data/db
+
+  mongo-express:
+
+    image: mongo-express
+
+    container_name: mexpress
+
+    environment:
+
+      - ME_CONFIG_BASICAUTH_USERNAME=mexpress
+
+      - ME_CONFIG_BASICAUTH_PASSWORD=mexpress
+
+    links:
+
+      - mongo
+
+    restart: unless-stopped
+
+    ports:
+      - "8081:8081"
