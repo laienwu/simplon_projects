@@ -240,4 +240,8 @@ cython_debug/
 .idea/
 semaine3/test.py
 data/
+<<<<<<< HEAD
 /semaine5/script/dbdata6/
+=======
+semaine5/database
+>>>>>>> refs/remotes/origin/master
