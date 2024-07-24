@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+    <title>Détails météorologiques</title>
+</head>
+<body>
+    <h1>Détails météorologiques pour {{ city }}</h1>
+    {% if weather %}
+        <p>Température : {{ weather.main.temp }}°C</p>
+        <p>Température ressentie : {{ weather.main.feels_like }}°C</p>
+        <p>Température minimale : {{ weather.main.temp_min }}°C</p>
+        <p>Température maximale : {{ weather.main.temp_max }}°C</p>
+        <p>Pression : {{ weather.main.pressure }} hPa</p>
+        <p>Humidité : {{ weather.main.humidity }}%</p>
+        <p>Vent : {{ weather.wind.speed }} m/s, direction {{ weather.wind.deg }}°</p>
+        <p>Visibilité : {{ weather.visibility / 1000 }} km</p>
+        <p>Lever du soleil : {{ weather.sys.sunrise | datetimeformat }}</p>
+        <p>Coucher du soleil : {{ weather.sys.sunset | datetimeformat }}</p>
+    {% else %}
+        <p>Désolé, les détails météorologiques pour {{ city }} ne sont pas disponibles.</p>
+    {% endif %}
+
+    <form method="get" action="/details">
+        <label for="city">Ville :</label>
+        <input type="text" id="city" name="city">
+        <button type="submit">Rechercher</button>
+    </form>
+    <a href="/">Retour à l'accueil</a>
+</body>
+</html>
