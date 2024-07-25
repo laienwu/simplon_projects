@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+    <title>Prévisions météo</title>
+</head>
+<body>
+    <h1>Prévisions météorologiques pour {{ city }}</h1>
+    {% if forecast %}
+        {% for entry in forecast.list %}
+            <p><strong>{{ entry.dt_txt }}</strong></p>
+            <p>Température : {{ entry.main.temp }}°C</p>
+            <p>Temps : {{ entry.weather[0].description }}</p>
+            <p>Humidité : {{ entry.main.humidity }}%</p>
+            <p>Vent : {{ entry.wind.speed }} m/s</p>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>Désolé, les données de prévisions pour {{ city }} ne sont pas disponibles.</p>
+    {% endif %}
+
+    <form method="get" action="/forecast">
+        <label for="city">Ville :</label>
+        <input type="text" id="city" name="city">
+        <button type="submit">Rechercher</button>
+    </form>
+    <a href="/">Retour à l'accueil</a>
+</body>
+</html>

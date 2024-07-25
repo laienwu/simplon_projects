@@ -25,6 +25,7 @@ jupyter = "^1.0.0"
 sqlalchemy = "^2.0.31"
 mysql-connector-python = "^9.0.0"
 pymongo = "^4.8.0"
+flask = "^3.0.3"
 
 
 [tool.poetry.group.scrapper.dependencies]
