@@ -1,10 +1,29 @@
 services:
   mongo-dev:
     image: mongo:latest
-    restart: always
+    container_name: mongo
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: "usr"
+#      MONGO_INITDB_ROOT_PASSWORD: "pw"
+    volumes:
+      - mongo_data:/data/db
     ports:
       - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: "usr"
-      MONGO_INITDB_ROOT_PASSWORD: "pw"
 
+  flask:
+    build: ./app
+    container_name: flask_app
+#    command:
+#      - "python -u app.py"
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: "usr"
+#      MONGO_INITDB_ROOT_PASSWORD: "pw"
+#      MONGO_HOST: mongo-dev
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo-dev
+
+
+volumes:
+  mongo_data:
