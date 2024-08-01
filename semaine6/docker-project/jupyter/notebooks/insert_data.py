@@ -1,15 +1,14 @@
-# from dotenv import load_dotenv
-# import os
+from dotenv import load_dotenv
+import os
 from pymongo import MongoClient, InsertOne
 from bson.json_util import loads
 
 
 if __name__ == '__main__':
-    # load_dotenv()
-    # usr = os.getenv("mongo_usr")
-    # pwd = os.getenv("mongo_pw")
-    # with MongoClient(f'mongodb://{usr}:{pwd}@mongodb:27017/') as client:
-    with MongoClient(f'mongodb://usr:pw@mongodb:27017/') as client:
+    load_dotenv()
+    usr = os.getenv("MONGO_USR")
+    pwd = os.getenv("MONGO_PW")
+    with MongoClient(f'mongodb://{usr}:{pwd}@mongodb:27017/') as client:
         db = client["airbnb"]
         collection = db["listingsAndReviews"]
 
