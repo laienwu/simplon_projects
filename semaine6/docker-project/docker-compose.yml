@@ -8,6 +8,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PW}
     volumes:
       - mongo_data:/data/db
+    ports:
+      - "27017:27017"
 
   mongo_express:
     image: mongo-express:latest
@@ -22,24 +24,26 @@ services:
       ME_CONFIG_BASICAUTH: false
     depends_on:
       - mongodb
-#
-#  flask_app:
-#    build:
-#      context: ./flask_app
-#    container_name: flask_app
-#    ports:
-#      - "5000:5000"
-#    depends_on:
-#      - mongodb
-#
-#  streamlit_app:
-#    build:
-#      context: ./streamlit_app
-#    container_name: streamlit_app
-#    ports:
-#      - "8501:8501"
-#    depends_on:
-#      - flask_app
+
+  flask_app:
+    build:
+      context: ./flask_app
+    container_name: flask_app
+    ports:
+      - "5000:5000"
+    environment:
+      MONGO_URI: mongodb://${MONGO_USR}:${MONGO_PW}@mongodb:27017/
+    depends_on:
+      - mongodb
+
+  streamlit_app:
+    build:
+      context: ./streamlit_app
+    container_name: streamlit_app
+    ports:
+      - "8501:8501"
+    depends_on:
+      - flask_app
 ##
   jupyter:
     build:
