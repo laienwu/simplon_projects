@@ -13,14 +13,6 @@ services:
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ../data/superstorerawdata_corrected.csv:/var/lib/mysql-files/superstorerawdata_corrected.csv
 
-  adminer:
-    image: adminer
-    container_name: superstore_adminer
-    depends_on:
-      - my_sql_db
-    ports:
-      - "8080:8080"
-
   jupyter:
     build:
       context: ./jupyter
