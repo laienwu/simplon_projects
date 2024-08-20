@@ -105,7 +105,7 @@ CREATE TABLE import_csv
 );
 
 -- load data into temporary table
-LOAD DATA INFILE "../data/superstorerawdata_corrected.csv"
+LOAD DATA INFILE "/var/lib/mysql-files/superstorerawdata_corrected.csv"
     INTO TABLE import_csv
     FIELDS TERMINATED BY ','
     LINES TERMINATED BY '\r\n'
