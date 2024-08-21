@@ -84,7 +84,7 @@ CREATE TABLE import_csv
     ShipDate         DATE,
     ShipMode         VARCHAR(50),
     CustomerID       VARCHAR(50),
-    SalesRepr        INT,
+    SalesRepr        VARCHAR(50),
     LocationID       VARCHAR(50),
     ProductID        VARCHAR(50),
     Sales            FLOAT,
@@ -108,5 +108,6 @@ CREATE TABLE import_csv
 LOAD DATA INFILE "/var/lib/mysql-files/superstorerawdata_corrected.csv"
     INTO TABLE import_csv
     FIELDS TERMINATED BY ','
+    ENCLOSED BY '"'
     LINES TERMINATED BY '\r\n'
     IGNORE 1 ROWS;
