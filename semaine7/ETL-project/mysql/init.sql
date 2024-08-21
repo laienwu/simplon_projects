@@ -84,7 +84,7 @@ CREATE TABLE import_csv
     ShipDate         DATE,
     ShipMode         VARCHAR(50),
     CustomerID       VARCHAR(50),
-    SalesRepr        INT,
+    SalesRepr        VARCHAR(50),
     LocationID       VARCHAR(50),
     ProductID        VARCHAR(50),
     Sales            FLOAT,
