@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS Orders_details
 );
 
 -- Temporary Table for parsing data
-CREATE TABLE import_csv
+CREATE TEMPORARY TABLE import_csv
 (
     OrderID          VARCHAR(50),
     OrderDate        DATE,
@@ -132,12 +132,12 @@ SELECT DISTINCT CustomerID, CustomerName, Segment
 FROM import_csv;
 
 -- Insert data into product table
-INSERT INTO products (ProductID, ProductName, Category, SubCategory)
+INSERT INTO Products (ProductID, ProductName, Category, SubCategory)
 SELECT DISTINCT ProductID, ProductName, Category, SubCategory
 FROM import_csv;
 
 -- Insert data into address table
-INSERT INTO address (LocationID, City, PostalCode)
+INSERT INTO Address (LocationID, City, PostalCode)
 SELECT DISTINCT LocationID, City, PostalCode
 FROM import_csv;
 
@@ -161,7 +161,7 @@ FROM import_csv;
 
 
 -- Insert data into orders table
-INSERT INTO orders(OrderID, OrderDate, ShipDate, ShipMode)
+INSERT INTO Orders(OrderID, OrderDate, ShipDate, ShipMode)
 SELECT DISTINCT OrderID, OrderDate, ShipDate, ShipMode
 FROM import_csv;
 

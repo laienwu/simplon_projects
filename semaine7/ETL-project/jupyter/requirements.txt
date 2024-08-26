@@ -2,4 +2,5 @@ notebook
 pandas
 plotly
 seaborn
-pyspark
+SQLAlchemy
+PyMySQL

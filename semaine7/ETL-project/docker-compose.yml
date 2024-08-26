@@ -23,7 +23,7 @@ services:
       - data_volumes:/var/lib/mysql-files/data
     depends_on:
       - pre_hook
-    entrypoint: /bin/sh -c 'while [ ! -f /var/lib/mysql-files/data/superstorerawdata_cleaned.csv ]; do echo "Waiting for data_clean_script to create the file..."; sleep 5; done && docker-entrypoint.sh mysql'
+    entrypoint: /bin/sh -c 'while [ ! -f /var/lib/mysql-files/data/superstorerawdata_cleaned.csv ]; do echo "Waiting for data_clean_script to create the file..."; sleep 5; done && docker-entrypoint.sh mysqld'
 
   jupyter:
     build:
@@ -33,6 +33,8 @@ services:
       - "8887:8888"
     volumes:
       - ./jupyter/notebooks:/home/work
+    environment:
+      MYSQL_URI: mysql+pymsql://${MYSQL_USER}:${MYSQL_ROOT_PASSWORD}@localhost/${MYSQL_DATABASE_NAME}
     depends_on:
       - my_sql_db
 
