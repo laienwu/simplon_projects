@@ -123,7 +123,7 @@ LOAD DATA INFILE "/var/lib/mysql-files/data/superstorerawdata_cleaned.csv"
     INTO TABLE import_csv
     FIELDS TERMINATED BY ','
     ENCLOSED BY '"'
-    LINES TERMINATED BY '\r\n'
+    LINES TERMINATED BY '\n'
     IGNORE 1 ROWS;
 
 -- Insert data into customer table
