@@ -1,4 +1,14 @@
 services:
+  pre_hook:
+    build:
+      context : ./pre-hook_script
+    container_name  : data_clean_script
+    volumes:
+      - data_volumes:/data
+    environment:
+      - INPUT_FILE=/data/superstorerawdata.csv
+      - OUTPUT_FILE=/data/superstorerawdata_cleaned.csv
+
   my_sql_db:
     image: mysql:latest
     container_name: superstore_mysql
@@ -9,9 +19,12 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE_NAME}
     volumes:
-      - mysql_data_volumes:/var/lib/mysql
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ../data/superstorerawdata_corrected.csv:/var/lib/mysql-files/superstorerawdata_corrected.csv
+#      - data_volumes/superstorerawdata_cleaned.csv:/var/lib/mysql-files/superstorerawdata_cleaned.csv
+      - data_volumes:/var/lib/mysql-files/data
+    depends_on:
+      - pre_hook
+    entrypoint: /bin/sh -c 'while [ ! -f /var/lib/mysql-files/data/superstorerawdata_cleaned.csv ]; do echo "Waiting for data_clean_script to create the file..."; sleep 5; done && docker-entrypoint.sh mysqld'
 
   jupyter:
     build:
@@ -25,10 +38,10 @@ services:
       - my_sql_db
 
 volumes:
-  mysql_data_volumes:
+  data_volumes:
     name: ${VOLUME_NAME}
     driver: local
     driver_opts:
       type: none
-      device: ./data/mysql_data
+      device: ./data
       o: bind

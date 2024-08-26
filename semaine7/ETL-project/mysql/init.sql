@@ -1,6 +1,6 @@
 -- Création de la base de données
-CREATE DATABASE IF NOT EXISTS superstore;
-USE superstore;
+CREATE DATABASE IF NOT EXISTS Superstore;
+USE Superstore;
 
 -- Table Customers
 CREATE TABLE IF NOT EXISTS Customers
@@ -119,7 +119,7 @@ CREATE TABLE import_csv
 );
 
 -- load data into temporary table
-LOAD DATA INFILE "/var/lib/mysql-files/superstorerawdata_corrected.csv"
+LOAD DATA INFILE "/var/lib/mysql-files/data/superstorerawdata_cleaned.csv"
     INTO TABLE import_csv
     FIELDS TERMINATED BY ','
     ENCLOSED BY '"'
