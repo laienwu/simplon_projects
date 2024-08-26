@@ -9,6 +9,7 @@ package-mode=false
 python = "^3.12"
 
 
+
 [tool.poetry.group.viz.dependencies]
 seaborn = "^0.13.2"
 matplotlib = "^3.9.0"
@@ -18,6 +19,7 @@ plotly = "^5.22.0"
 [tool.poetry.group.data.dependencies]
 pandas = {extras = ["aws", "excel", "gcp", "hdf5", "mysql", "parquet", "performance", "plot", "postgresql", "spss", "sql-other"], version = "^2.2.2"}
 polars = "^1.0.0"
+pyspark = {extras = ["all"], version = "^3.5.2"}
 
 
 [tool.poetry.group.dev.dependencies]
