@@ -1,39 +1,52 @@
 # convert data_management notebook into script.py
 # todo add unit tests
-import pandas as pd
+import csv
 from pathlib import Path
-from collections import defaultdict
 import re
 import os
 
-COLUMN_TYPES = defaultdict(pd.StringDtype,
-                           sales='float',
-                           quantity='float',
-                           discount='float',
-                           profit='float',
-                           )
+
 def convert_date_format(date_str):
     match = re.match(r'(\d{2})/(\d{2})/(\d{4})', date_str)
     if match:
         day, month, year = match.groups()
         return f'{year}-{month}-{day}'
     return date_str
-def main(input_file: Path, output_file :Path) -> None:
-    # load, drop nan , drop duplicates
-    df = pd.read_csv(input_file).dropna().drop_duplicates()
 
-    # correct wrong format date
-    for col in ['order_date', 'ship_date']:
-        df[col] = df[col].apply(convert_date_format)
 
-    # correct typo (could drop)
-    df['quantity'] = df['quantity'].abs()
+def main(input_file, output_file):
+    # Read the CSV file and store rows
+    with open(input_file, mode='r', newline='',encoding="utf8") as infile:
+        reader = csv.DictReader(infile)
+        rows = list(reader)
 
-    # save to new csv
-    df.to_csv(output_file, index=False)
+    # Remove rows with missing data (None or empty strings) and drop duplicates
+    unique_rows = []
+    seen = set()
+    for row in rows:
+        if all(row.values()) and tuple(row.items()) not in seen:
+            unique_rows.append(row)
+            seen.add(tuple(row.items()))
+
+    # Correct wrong format date in 'order_date' and 'ship_date' columns
+    for row in unique_rows:
+        for col in ['order_date', 'ship_date']:
+            row[col] = convert_date_format(row[col])
+
+    # Correct typo by ensuring 'quantity' is positive
+    for row in unique_rows:
+        row['quantity'] = str(int(abs(float(row['quantity']))))
+
+    # Write the cleaned data to a new CSV file
+    with open(output_file, mode='w', newline='') as outfile:
+        fieldnames = unique_rows[0].keys()
+        writer = csv.DictWriter(outfile, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(unique_rows)
+
 
 if __name__ == "__main__":
-    input_file=os.getenv('INPUT_FILE')
-    output_file=os.getenv('OUTPUT_FILE')
+    input_file = os.getenv('INPUT_FILE', Path('../data/superstorerawdata.csv'))
+    output_file = os.getenv('OUTPUT_FILE', Path('../data/superstorerawdata_cleaned.csv'))
     main(input_file, output_file)
-    os.chmod(output_file,0o777)
+
