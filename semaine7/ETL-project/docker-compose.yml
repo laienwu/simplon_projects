@@ -25,6 +25,16 @@ services:
       - pre_hook
     entrypoint: /bin/sh -c 'while [ ! -f /var/lib/mysql-files/data/superstorerawdata_cleaned.csv ]; do echo "Waiting for data_clean_script to create the file..."; sleep 5; done && docker-entrypoint.sh mysqld'
 
+  adminer:
+    image: adminer
+    container_name: adminer
+    ports:
+      - "8081:8080"
+    depends_on:
+      - my_sql_db
+    environment:
+      ADMINER_DEFAULT_SERVER: my_sql_db
+
   jupyter:
     build:
       context: ./jupyter

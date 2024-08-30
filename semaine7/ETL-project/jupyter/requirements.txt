@@ -1,6 +1,5 @@
 notebook
 pandas
 plotly
-seaborn
 SQLAlchemy
 PyMySQL
